@@ -183,7 +183,7 @@ def test_get_dict_with_counted_words_method():
     assert not assert_errors, f"Detected errors: {' '.join(assert_errors)}"
 
 
-def test_get_top_words():
+def test_get_top_words_method():
     class_handler = CountWordsFromUrl("https://www.example.com", "result.txt")
     content_handler = class_handler.get_top_words(top_count=3)
     assert_errors = []
@@ -198,7 +198,7 @@ def test_get_top_words():
     assert not assert_errors, f"Detected errors: {' '.join(assert_errors)}"
 
 
-def test_save_top_words_to_file():
+def test_save_top_words_to_file_method():
     class_handler = CountWordsFromUrl("https://www.example.com", "result.txt")
     result_file = class_handler.save_top_words_to_file(top_count=3)
     assert_errors = []
@@ -206,8 +206,9 @@ def test_save_top_words_to_file():
         assert_errors.append("File does not exist.")
     with open(result_file, 'r') as rfile:
         file_lines = rfile.readlines()
-        if not file_lines[0][0] == '1':
-            assert_errors.append(f"Iterator issue.")
-        if not file_lines[-1][0] == '3':
-            assert_errors.append(f"Iterator issue.")
+    os.remove(result_file)
+    if not file_lines[0][0] == '1':
+        assert_errors.append(f"Iterator issue.")
+    if not file_lines[-1][0] == '3':
+        assert_errors.append(f"Iterator issue.")
     assert not assert_errors, f"Detected errors: {' '.join(assert_errors)}"

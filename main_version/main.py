@@ -23,7 +23,7 @@ def main():
     optional.add_argument('-o', '--output-file',
                           metavar='<output_file_path>',
                           help='Output file path.',
-                          default="results.txt")
+                          default="result.txt")
     optional.add_argument('-s', '--show',
                           action='store_true',
                           help="Print result to console.",
