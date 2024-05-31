@@ -15,8 +15,8 @@ class InvalidUrlError(Exception):
 class HTMLContentCleaner:
     def __init__(self, web_url, result_file, count_head=False):
         self.web_url = web_url
-        self.result_file = result_file
         self.web_content = None
+        self.result_file = result_file
         self.count_head = count_head
 
     def validate_url(self):
@@ -154,3 +154,32 @@ class HTMLContentCleaner:
 
     def ret_all(self):
         return self.get_web_content()
+
+
+class CountWordsFromUrl(HTMLContentCleaner):
+    def __init__(self, web_url, result_file, count_head=False):
+        super().__init__(web_url, result_file, count_head)
+        self.get_web_content()
+        self.clean_all()
+
+    def get_unique_words_set(self):
+        return set(self.web_content.lower().split())
+
+    def get_all_words_list(self):
+        return self.web_content.lower().split()
+
+    def get_dict_with_counted_words(self):
+        result_dict = {}
+        unique_words_set = self.get_unique_words_set()
+        all_words_list = self.get_all_words_list()
+        for unique_word in unique_words_set:
+            result_dict[unique_word] = all_words_list.count(unique_word)
+        return result_dict
+
+    def show_top_words(self, top_count=10):
+        unsorted_dict = self.get_dict_with_counted_words()
+        sorted_dict = sorted(unsorted_dict.items(), key=lambda x: x[1], reverse=True)
+        iterator = 0
+        for word, count in sorted_dict[:top_count]:
+            iterator += 1
+            print(f"{iterator}. {word} --- {count}")
