@@ -79,6 +79,8 @@ class HTMLContentCleaner:
         :type left_d: str
         :return(str): The cleaned string with content between the delimiters removed.
         """
+        if left_d == right_d:
+            raise Exception("Left and right delimiter should not be the same")
         result_content = []
         punctuation_marks = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
         while True:
