@@ -28,3 +28,43 @@ and tools to analyse text or remove tags from html code.
 
 Do not use tools such as nltk or spacy. Instead, focus on implementing algorithms and data structures in
 Python.
+
+## Requirements:
+1. Python version >3.10
+2. pip installed.
+3. Requirements installed:
+   1. Open *cmd* ( Windows ) /  *console* (Linux).
+   2. Navigate to *interviewTask* repository catalogue.
+   3. Run command:
+```
+pip install -r requirements.txt
+```
+
+## Program usage
+1. Open *cmd* ( Windows ) /  *console* (Linux).
+2. Navigate to *interviewTask* repository catalogue.
+3. Run command 
+```
+python .\main_version\main.py -h
+```
+### Examlples:
+Analyze given url and saves 10 top words into result.txt file.
+```
+python .\main_version\main.py -u https://example.com/
+```
+Analyze given url and saves ```5``` top words into ```my_file.txt``` file.
+```
+python .\main_version\main.py -u https://example.com/ -o my_file.txt -n 5
+```
+Analyze given url and saves 10 top words into result.txt file and print it to console.
+```
+python .\main_version\main.py -u https://example.com/ -s
+```
+
+## Basic Unit tests:
+1. Open *cmd* ( Windows ) /  *console* (Linux).
+2. Navigate to *interviewTask* repository catalogue.
+3. Run command 
+```
+pytest -rA .\unit_tests\unit_test.py
+```
