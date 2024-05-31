@@ -162,24 +162,48 @@ class CountWordsFromUrl(HTMLContentCleaner):
         self.get_web_content()
         self.clean_all()
 
-    def get_unique_words_set(self):
-        return set(self.web_content.lower().split())
+    def get_unique_words_set(self, print_to_console=False):
+        return_set = set(self.web_content.lower().split())
+        if print_to_console:
+            print(return_set)
+        return return_set
 
-    def get_all_words_list(self):
-        return self.web_content.lower().split()
+    def get_all_words_list(self, print_to_console=False):
+        all_words_list = self.web_content.lower().split()
+        if print_to_console:
+            print(all_words_list)
+        return all_words_list
 
-    def get_dict_with_counted_words(self):
+    def get_dict_with_counted_words(self, print_to_console=False):
         result_dict = {}
         unique_words_set = self.get_unique_words_set()
         all_words_list = self.get_all_words_list()
         for unique_word in unique_words_set:
             result_dict[unique_word] = all_words_list.count(unique_word)
+        if print_to_console:
+            print(result_dict)
         return result_dict
 
-    def show_top_words(self, top_count=10):
+    def get_top_words(self, top_count=10, print_to_console=False):
         unsorted_dict = self.get_dict_with_counted_words()
         sorted_dict = sorted(unsorted_dict.items(), key=lambda x: x[1], reverse=True)
         iterator = 0
+        return_list = []
+        if top_count == -1:
+            top_count = len(sorted_dict)
         for word, count in sorted_dict[:top_count]:
             iterator += 1
-            print(f"{iterator}. {word} --- {count}")
+            row = f"{iterator}. {word} --- {count}"
+            if print_to_console:
+                print(row)
+            return_list.append(row)
+        return return_list
+
+    def save_top_words_to_file(self, top_count=10, print_to_console=False):
+        top_words_list = self.get_top_words(top_count=top_count)
+        with open(self.result_file, 'w') as f:
+            for row in top_words_list:
+                if print_to_console:
+                    print(row)
+                f.write(row + '\n')
+        return self.result_file
